@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Raycaster</title>
+    <script src="src/caster.js" type="text/javascript" charset="utf-8"></script>
+    <script src="src/raf.js" type="text/javascript" charset="utf-8"></script>
+    <script src="Stats.js" type="text/javascript" charset="utf-8"></script>
+  </head>
+  <style type="text/css">
+/* Nice perf hack here for slower machines (quality suffers)
+    #surface { width: 1024px; height: 768px; }
+*/
+  </style>
+  <body>
+    <canvas id="surface"></canvas>
+    <script type="text/javascript" charset="utf-8">
+      (function() {
+
+        var stats = new Stats();
+        stats.domElement.style.position = "fixed";
+        stats.domElement.style.right = "10px";
+        stats.domElement.style.top = "10px";
+        document.body.appendChild(stats.domElement);
+
+        var canvas = document.getElementById("surface");
+        var ctx = canvas.getContext("2d");
+
+        var caster = Caster(ctx);
+
+        (function gameloop() {
+          caster.update();
+          stats.update();
+
+          // http://paulirish.com/2011/requestanimationframe-for-smart-animating/
+          window.requestAnimFrame(gameloop);
+        })();
+
+      })();
+    </script>
+  </body>
+</html>
